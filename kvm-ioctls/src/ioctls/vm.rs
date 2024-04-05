@@ -1382,7 +1382,12 @@ impl VmFd {
     /// cap.args[0] = 24;
     /// vm.enable_cap(&cap).unwrap();
     /// ```
-    #[cfg(any(target_arch = "x86_64", target_arch = "s390x", target_arch = "powerpc"))]
+    #[cfg(any(
+        target_arch = "aarch64",
+        target_arch = "x86_64",
+        target_arch = "s390x",
+        target_arch = "powerpc"
+    ))]
     pub fn enable_cap(&self, cap: &kvm_enable_cap) -> Result<()> {
         // SAFETY: The ioctl is safe because we allocated the struct and we know the
         // kernel will write exactly the size of the struct.
