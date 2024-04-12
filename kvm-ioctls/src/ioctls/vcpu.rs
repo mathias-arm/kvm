@@ -1680,6 +1680,16 @@ impl VcpuFd {
                     Ok(VcpuExit::IoapicEoi(eoi.vector))
                 }
                 KVM_EXIT_HYPERV => Ok(VcpuExit::Hyperv),
+                KVM_EXIT_MEMORY_FAULT => {
+                    // SAFETY: Safe because the exit_reason (which comes from the kernel) told us
+                    // which union field to use.
+                    let info = unsafe { &mut run.__bindgen_anon_1.memory_fault };
+                    Ok(VcpuExit::MemoryFault {
+                        flags: info.flags,
+                        gpa: info.gpa,
+                        size: info.size,
+                    })
+                }
                 r => Ok(VcpuExit::Unsupported(r)),
             }
         } else {
