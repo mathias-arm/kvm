@@ -2791,4 +2791,38 @@ mod tests {
         vm.register_enc_memory_region(&memory_region).unwrap();
         vm.unregister_enc_memory_region(&memory_region).unwrap();
     }
+
+    #[test]
+    #[cfg(any(target_arch = "x86", target_arch = "x86_64", target_arch = "aarch64"))]
+    fn test_guest_memfd() {
+        let kvm = Kvm::new().unwrap();
+        let vm = kvm.create_vm().unwrap();
+
+        // TODO: actually test this!
+        if vm.check_extension(Cap::GuestMemfd) {
+            // First try a few invalid parameters
+            let mut args = kvm_create_guest_memfd {
+                size: 0,
+                flags: 0,
+                ..Default::default()
+            };
+
+            assert_eq!(
+                vm.create_guest_memfd(args).unwrap_err().errno(),
+                libc::EINVAL
+            );
+
+            args.size = 0x10000;
+            args.flags = 0x80;
+
+            assert_eq!(
+                vm.create_guest_memfd(args).unwrap_err().errno(),
+                libc::EINVAL
+            );
+
+            args.flags = 0x0;
+
+            assert!(vm.create_guest_memfd(args).is_ok());
+        }
+    }
 }
