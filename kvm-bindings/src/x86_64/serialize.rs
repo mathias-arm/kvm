@@ -11,6 +11,8 @@ use fam_wrappers::kvm_xsave2;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use zerocopy::{transmute, AsBytes, FromBytes, FromZeroes};
 
+// Note that gen-bindings looks for this specific macro and one struct name per
+// line.
 serde_impls!(
     kvm_regs,
     kvm_segment,

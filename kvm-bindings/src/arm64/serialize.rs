@@ -4,6 +4,8 @@ use bindings::{
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use zerocopy::{transmute, AsBytes};
 
+// Note that gen-bindings looks for this specific macro and one struct name per
+// line.
 serde_impls!(
     user_pt_regs,
     user_fpsimd_state,

@@ -94,9 +94,8 @@ Additionally, these structs need to have their layout changed from `#[repr(C)]`
 to `#[repr(transparent)]`. This is needed because `zerocopy` traits can only be
 derived on generic structures that are `repr(transparent)` or `repr(packed)`.
 
-### Future Improvements
-All the above steps are scriptable, so in the next iteration I will add a
-script to generate the bindings.
+Use the scripts/gen-bindings.sh script to automatically generate and patch the
+bindings.
 
 # Testing
 
