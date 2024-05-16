@@ -4,14 +4,14 @@ use bindings::{
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use zerocopy::{transmute, AsBytes};
 
-serde_impls! {
+serde_impls!(
     user_pt_regs,
     user_fpsimd_state,
     kvm_regs,
     kvm_vcpu_init,
     kvm_mp_state,
     kvm_one_reg
-}
+);
 
 #[cfg(test)]
 mod tests {
