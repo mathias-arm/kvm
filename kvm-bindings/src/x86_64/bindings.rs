@@ -420,6 +420,8 @@ pub const KVM_VM_MIPS_AUTO: u32 = 0;
 pub const KVM_VM_MIPS_VZ: u32 = 1;
 pub const KVM_VM_MIPS_TE: u32 = 2;
 pub const KVM_S390_SIE_PAGE_OFFSET: u32 = 1;
+pub const KVM_VM_TYPE_ARM_SHIFT: u32 = 8;
+pub const KVM_VM_TYPE_ARM_MASK: u32 = 3840;
 pub const KVM_VM_TYPE_ARM_IPA_SIZE_MASK: u32 = 255;
 pub const KVM_CAP_IRQCHIP: u32 = 0;
 pub const KVM_CAP_HLT: u32 = 1;
@@ -654,6 +656,7 @@ pub const KVM_CAP_VM_TYPES: u32 = 235;
 pub const KVM_CAP_PRE_FAULT_MEMORY: u32 = 236;
 pub const KVM_CAP_X86_APIC_BUS_CYCLES_NS: u32 = 237;
 pub const KVM_CAP_X86_GUEST_MODE: u32 = 238;
+pub const KVM_CAP_ARM_RME: u32 = 300;
 pub const KVM_IRQ_ROUTING_IRQCHIP: u32 = 1;
 pub const KVM_IRQ_ROUTING_MSI: u32 = 2;
 pub const KVM_IRQ_ROUTING_S390_ADAPTER: u32 = 3;
@@ -5722,4 +5725,24 @@ const _: () = {
         [::std::mem::offset_of!(kvm_pre_fault_memory, flags) - 16usize];
     ["Offset of field: kvm_pre_fault_memory::padding"]
         [::std::mem::offset_of!(kvm_pre_fault_memory, padding) - 24usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_arm_rmm_psci_complete {
+    pub target_mpidr: __u64,
+    pub psci_status: __u32,
+    pub padding: [__u32; 3usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_arm_rmm_psci_complete"]
+        [::std::mem::size_of::<kvm_arm_rmm_psci_complete>() - 24usize];
+    ["Alignment of kvm_arm_rmm_psci_complete"]
+        [::std::mem::align_of::<kvm_arm_rmm_psci_complete>() - 8usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::target_mpidr"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, target_mpidr) - 0usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::psci_status"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, psci_status) - 8usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::padding"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, padding) - 12usize];
 };
