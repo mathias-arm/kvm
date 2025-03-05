@@ -9,7 +9,7 @@ use bindings::{
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use zerocopy::{transmute, AsBytes};
 
-serde_impls! {
+serde_impls!(
     kvm_mp_state,
     kvm_one_reg,
     kvm_riscv_config,
@@ -20,7 +20,7 @@ serde_impls! {
     kvm_riscv_smstateen_csr,
     kvm_riscv_timer,
     kvm_riscv_sbi_sta
-}
+);
 
 #[cfg(test)]
 mod tests {

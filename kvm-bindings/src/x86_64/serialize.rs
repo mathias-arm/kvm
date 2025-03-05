@@ -33,7 +33,9 @@ serde_impls!(
     kvm_cpuid2,
     kvm_xsave,
     kvm_xsave2,
-    kvm_irqchip
+    kvm_irqchip,
+    kvm_pic_state,
+    kvm_ioapic_state,
 );
 
 // SAFETY: zerocopy's derives explicitly disallow deriving for unions where
