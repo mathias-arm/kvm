@@ -711,6 +711,9 @@ pub const KVM_CAP_MEMORY_FAULT_INFO: u32 = 232;
 pub const KVM_CAP_MEMORY_ATTRIBUTES: u32 = 233;
 pub const KVM_CAP_GUEST_MEMFD: u32 = 234;
 pub const KVM_CAP_VM_TYPES: u32 = 235;
+pub const KVM_CAP_PRE_FAULT_MEMORY: u32 = 236;
+pub const KVM_CAP_X86_APIC_BUS_CYCLES_NS: u32 = 237;
+pub const KVM_CAP_X86_GUEST_MODE: u32 = 238;
 pub const KVM_IRQ_ROUTING_IRQCHIP: u32 = 1;
 pub const KVM_IRQ_ROUTING_MSI: u32 = 2;
 pub const KVM_IRQ_ROUTING_S390_ADAPTER: u32 = 3;
@@ -3744,5 +3747,26 @@ const _: () = {
         [::std::mem::offset_of!(kvm_create_guest_memfd, flags) - 8usize];
     ["Offset of field: kvm_create_guest_memfd::reserved"]
         [::std::mem::offset_of!(kvm_create_guest_memfd, reserved) - 16usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_pre_fault_memory {
+    pub gpa: __u64,
+    pub size: __u64,
+    pub flags: __u64,
+    pub padding: [__u64; 5usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_pre_fault_memory"][::std::mem::size_of::<kvm_pre_fault_memory>() - 64usize];
+    ["Alignment of kvm_pre_fault_memory"][::std::mem::align_of::<kvm_pre_fault_memory>() - 8usize];
+    ["Offset of field: kvm_pre_fault_memory::gpa"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, gpa) - 0usize];
+    ["Offset of field: kvm_pre_fault_memory::size"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, size) - 8usize];
+    ["Offset of field: kvm_pre_fault_memory::flags"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, flags) - 16usize];
+    ["Offset of field: kvm_pre_fault_memory::padding"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, padding) - 24usize];
 };
 pub type __uint128_t = u128;

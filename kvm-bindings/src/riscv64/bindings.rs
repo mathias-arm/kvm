@@ -440,6 +440,9 @@ pub const KVM_CAP_MEMORY_FAULT_INFO: u32 = 232;
 pub const KVM_CAP_MEMORY_ATTRIBUTES: u32 = 233;
 pub const KVM_CAP_GUEST_MEMFD: u32 = 234;
 pub const KVM_CAP_VM_TYPES: u32 = 235;
+pub const KVM_CAP_PRE_FAULT_MEMORY: u32 = 236;
+pub const KVM_CAP_X86_APIC_BUS_CYCLES_NS: u32 = 237;
+pub const KVM_CAP_X86_GUEST_MODE: u32 = 238;
 pub const KVM_IRQ_ROUTING_IRQCHIP: u32 = 1;
 pub const KVM_IRQ_ROUTING_MSI: u32 = 2;
 pub const KVM_IRQ_ROUTING_S390_ADAPTER: u32 = 3;
@@ -1172,7 +1175,14 @@ pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZFA: KVM_RISCV_ISA_EXT_ID = 51;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZTSO: KVM_RISCV_ISA_EXT_ID = 52;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZACAS: KVM_RISCV_ISA_EXT_ID = 53;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_SSCOFPMF: KVM_RISCV_ISA_EXT_ID = 54;
-pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_MAX: KVM_RISCV_ISA_EXT_ID = 55;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZIMOP: KVM_RISCV_ISA_EXT_ID = 55;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCA: KVM_RISCV_ISA_EXT_ID = 56;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCB: KVM_RISCV_ISA_EXT_ID = 57;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCD: KVM_RISCV_ISA_EXT_ID = 58;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCF: KVM_RISCV_ISA_EXT_ID = 59;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCMOP: KVM_RISCV_ISA_EXT_ID = 60;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZAWRS: KVM_RISCV_ISA_EXT_ID = 61;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_MAX: KVM_RISCV_ISA_EXT_ID = 62;
 pub type KVM_RISCV_ISA_EXT_ID = ::std::os::raw::c_uint;
 pub const KVM_RISCV_SBI_EXT_ID_KVM_RISCV_SBI_EXT_V01: KVM_RISCV_SBI_EXT_ID = 0;
 pub const KVM_RISCV_SBI_EXT_ID_KVM_RISCV_SBI_EXT_TIME: KVM_RISCV_SBI_EXT_ID = 1;
@@ -3625,4 +3635,25 @@ const _: () = {
         [::std::mem::offset_of!(kvm_create_guest_memfd, flags) - 8usize];
     ["Offset of field: kvm_create_guest_memfd::reserved"]
         [::std::mem::offset_of!(kvm_create_guest_memfd, reserved) - 16usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_pre_fault_memory {
+    pub gpa: __u64,
+    pub size: __u64,
+    pub flags: __u64,
+    pub padding: [__u64; 5usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_pre_fault_memory"][::std::mem::size_of::<kvm_pre_fault_memory>() - 64usize];
+    ["Alignment of kvm_pre_fault_memory"][::std::mem::align_of::<kvm_pre_fault_memory>() - 8usize];
+    ["Offset of field: kvm_pre_fault_memory::gpa"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, gpa) - 0usize];
+    ["Offset of field: kvm_pre_fault_memory::size"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, size) - 8usize];
+    ["Offset of field: kvm_pre_fault_memory::flags"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, flags) - 16usize];
+    ["Offset of field: kvm_pre_fault_memory::padding"]
+        [::std::mem::offset_of!(kvm_pre_fault_memory, padding) - 24usize];
 };
