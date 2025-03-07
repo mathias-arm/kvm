@@ -265,7 +265,10 @@ pub const KVM_STATE_NESTED_SMM_VMXON: u32 = 2;
 pub const KVM_STATE_NESTED_VMX_VMCS_SIZE: u32 = 4096;
 pub const KVM_STATE_NESTED_SVM_VMCB_SIZE: u32 = 4096;
 pub const KVM_STATE_VMX_PREEMPTION_TIMER_DEADLINE: u32 = 1;
+pub const KVM_X86_GRP_SYSTEM: u32 = 0;
 pub const KVM_X86_XCOMP_GUEST_SUPP: u32 = 0;
+pub const KVM_X86_GRP_SEV: u32 = 1;
+pub const KVM_X86_SEV_VMSA_FEATURES: u32 = 0;
 pub const KVM_PMU_EVENT_ALLOW: u32 = 0;
 pub const KVM_PMU_EVENT_DENY: u32 = 1;
 pub const KVM_XEN_HVM_CONFIG_HYPERCALL_MSR: u32 = 1;
@@ -306,6 +309,8 @@ pub const KVM_VCPU_TSC_CTRL: u32 = 0;
 pub const KVM_VCPU_TSC_OFFSET: u32 = 0;
 pub const KVM_X86_DEFAULT_VM: u32 = 0;
 pub const KVM_X86_SW_PROTECTED_VM: u32 = 1;
+pub const KVM_X86_SEV_VM: u32 = 2;
+pub const KVM_X86_SEV_ES_VM: u32 = 3;
 pub const KVM_API_VERSION: u32 = 12;
 pub const KVM_MEM_LOG_DIRTY_PAGES: u32 = 1;
 pub const KVM_MEM_READONLY: u32 = 2;
@@ -2749,7 +2754,8 @@ pub const sev_cmd_id_KVM_SEV_DBG_ENCRYPT: sev_cmd_id = 18;
 pub const sev_cmd_id_KVM_SEV_CERT_EXPORT: sev_cmd_id = 19;
 pub const sev_cmd_id_KVM_SEV_GET_ATTESTATION_REPORT: sev_cmd_id = 20;
 pub const sev_cmd_id_KVM_SEV_SEND_CANCEL: sev_cmd_id = 21;
-pub const sev_cmd_id_KVM_SEV_NR_MAX: sev_cmd_id = 22;
+pub const sev_cmd_id_KVM_SEV_INIT2: sev_cmd_id = 22;
+pub const sev_cmd_id_KVM_SEV_NR_MAX: sev_cmd_id = 23;
 pub type sev_cmd_id = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
@@ -2769,6 +2775,27 @@ const _: () = {
     ["Offset of field: kvm_sev_cmd::data"][::std::mem::offset_of!(kvm_sev_cmd, data) - 8usize];
     ["Offset of field: kvm_sev_cmd::error"][::std::mem::offset_of!(kvm_sev_cmd, error) - 16usize];
     ["Offset of field: kvm_sev_cmd::sev_fd"][::std::mem::offset_of!(kvm_sev_cmd, sev_fd) - 20usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_sev_init {
+    pub vmsa_features: __u64,
+    pub flags: __u32,
+    pub ghcb_version: __u16,
+    pub pad1: __u16,
+    pub pad2: [__u32; 8usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_sev_init"][::std::mem::size_of::<kvm_sev_init>() - 48usize];
+    ["Alignment of kvm_sev_init"][::std::mem::align_of::<kvm_sev_init>() - 8usize];
+    ["Offset of field: kvm_sev_init::vmsa_features"]
+        [::std::mem::offset_of!(kvm_sev_init, vmsa_features) - 0usize];
+    ["Offset of field: kvm_sev_init::flags"][::std::mem::offset_of!(kvm_sev_init, flags) - 8usize];
+    ["Offset of field: kvm_sev_init::ghcb_version"]
+        [::std::mem::offset_of!(kvm_sev_init, ghcb_version) - 12usize];
+    ["Offset of field: kvm_sev_init::pad1"][::std::mem::offset_of!(kvm_sev_init, pad1) - 14usize];
+    ["Offset of field: kvm_sev_init::pad2"][::std::mem::offset_of!(kvm_sev_init, pad2) - 16usize];
 };
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
