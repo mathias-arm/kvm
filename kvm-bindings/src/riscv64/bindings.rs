@@ -1182,7 +1182,11 @@ pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCD: KVM_RISCV_ISA_EXT_ID = 58;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCF: KVM_RISCV_ISA_EXT_ID = 59;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZCMOP: KVM_RISCV_ISA_EXT_ID = 60;
 pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_ZAWRS: KVM_RISCV_ISA_EXT_ID = 61;
-pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_MAX: KVM_RISCV_ISA_EXT_ID = 62;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_SMNPM: KVM_RISCV_ISA_EXT_ID = 62;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_SSNPM: KVM_RISCV_ISA_EXT_ID = 63;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_SVADE: KVM_RISCV_ISA_EXT_ID = 64;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_SVADU: KVM_RISCV_ISA_EXT_ID = 65;
+pub const KVM_RISCV_ISA_EXT_ID_KVM_RISCV_ISA_EXT_MAX: KVM_RISCV_ISA_EXT_ID = 66;
 pub type KVM_RISCV_ISA_EXT_ID = ::std::os::raw::c_uint;
 pub const KVM_RISCV_SBI_EXT_ID_KVM_RISCV_SBI_EXT_V01: KVM_RISCV_SBI_EXT_ID = 0;
 pub const KVM_RISCV_SBI_EXT_ID_KVM_RISCV_SBI_EXT_TIME: KVM_RISCV_SBI_EXT_ID = 1;
@@ -3490,7 +3494,10 @@ pub const kvm_device_type_KVM_DEV_TYPE_ARM_VGIC_ITS: kvm_device_type = 8;
 pub const kvm_device_type_KVM_DEV_TYPE_XIVE: kvm_device_type = 9;
 pub const kvm_device_type_KVM_DEV_TYPE_ARM_PV_TIME: kvm_device_type = 10;
 pub const kvm_device_type_KVM_DEV_TYPE_RISCV_AIA: kvm_device_type = 11;
-pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_IPI: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_EIOINTC: kvm_device_type = 13;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_PCHPIC: kvm_device_type = 14;
+pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 15;
 pub type kvm_device_type = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]

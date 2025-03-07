@@ -255,6 +255,7 @@ pub const KVM_X86_QUIRK_MISC_ENABLE_NO_MWAIT: u32 = 16;
 pub const KVM_X86_QUIRK_FIX_HYPERCALL_INSN: u32 = 32;
 pub const KVM_X86_QUIRK_MWAIT_NEVER_UD_FAULTS: u32 = 64;
 pub const KVM_X86_QUIRK_SLOT_ZAP_ALL: u32 = 128;
+pub const KVM_X86_QUIRK_STUFF_FEATURE_MSRS: u32 = 256;
 pub const KVM_STATE_NESTED_FORMAT_VMX: u32 = 0;
 pub const KVM_STATE_NESTED_FORMAT_SVM: u32 = 1;
 pub const KVM_STATE_NESTED_GUEST_MODE: u32 = 1;
@@ -5552,7 +5553,10 @@ pub const kvm_device_type_KVM_DEV_TYPE_ARM_VGIC_ITS: kvm_device_type = 8;
 pub const kvm_device_type_KVM_DEV_TYPE_XIVE: kvm_device_type = 9;
 pub const kvm_device_type_KVM_DEV_TYPE_ARM_PV_TIME: kvm_device_type = 10;
 pub const kvm_device_type_KVM_DEV_TYPE_RISCV_AIA: kvm_device_type = 11;
-pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_IPI: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_EIOINTC: kvm_device_type = 13;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_PCHPIC: kvm_device_type = 14;
+pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 15;
 pub type kvm_device_type = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]

@@ -130,6 +130,7 @@ pub const HWCAP_SSBS: u32 = 268435456;
 pub const HWCAP_SB: u32 = 536870912;
 pub const HWCAP_PACA: u32 = 1073741824;
 pub const HWCAP_PACG: u32 = 2147483648;
+pub const HWCAP_GCS: u64 = 4294967296;
 pub const HWCAP2_DCPODP: u32 = 1;
 pub const HWCAP2_SVE2: u32 = 2;
 pub const HWCAP2_SVEAES: u32 = 4;
@@ -387,6 +388,7 @@ pub const KVM_PSCI_RET_NI: i32 = -1;
 pub const KVM_PSCI_RET_INVAL: i32 = -2;
 pub const KVM_PSCI_RET_DENIED: i32 = -3;
 pub const KVM_SYSTEM_EVENT_RESET_FLAG_PSCI_RESET2: u32 = 1;
+pub const KVM_SYSTEM_EVENT_SHUTDOWN_FLAG_PSCI_OFF2: u32 = 1;
 pub const KVM_EXIT_FAIL_ENTRY_CPU_UNSUPPORTED: u32 = 1;
 pub const KVM_HYPERCALL_EXIT_SMC: u32 = 1;
 pub const KVM_HYPERCALL_EXIT_16BIT: u32 = 2;
@@ -1055,6 +1057,23 @@ const _: () = {
         [::std::mem::offset_of!(user_za_header, flags) - 12usize];
     ["Offset of field: user_za_header::__reserved"]
         [::std::mem::offset_of!(user_za_header, __reserved) - 14usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct user_gcs {
+    pub features_enabled: __u64,
+    pub features_locked: __u64,
+    pub gcspr_el0: __u64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of user_gcs"][::std::mem::size_of::<user_gcs>() - 24usize];
+    ["Alignment of user_gcs"][::std::mem::align_of::<user_gcs>() - 8usize];
+    ["Offset of field: user_gcs::features_enabled"]
+        [::std::mem::offset_of!(user_gcs, features_enabled) - 0usize];
+    ["Offset of field: user_gcs::features_locked"]
+        [::std::mem::offset_of!(user_gcs, features_locked) - 8usize];
+    ["Offset of field: user_gcs::gcspr_el0"][::std::mem::offset_of!(user_gcs, gcspr_el0) - 16usize];
 };
 #[repr(C)]
 #[repr(align(16))]
@@ -3603,7 +3622,10 @@ pub const kvm_device_type_KVM_DEV_TYPE_ARM_VGIC_ITS: kvm_device_type = 8;
 pub const kvm_device_type_KVM_DEV_TYPE_XIVE: kvm_device_type = 9;
 pub const kvm_device_type_KVM_DEV_TYPE_ARM_PV_TIME: kvm_device_type = 10;
 pub const kvm_device_type_KVM_DEV_TYPE_RISCV_AIA: kvm_device_type = 11;
-pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_IPI: kvm_device_type = 12;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_EIOINTC: kvm_device_type = 13;
+pub const kvm_device_type_KVM_DEV_TYPE_LOONGARCH_PCHPIC: kvm_device_type = 14;
+pub const kvm_device_type_KVM_DEV_TYPE_MAX: kvm_device_type = 15;
 pub type kvm_device_type = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, PartialEq)]
