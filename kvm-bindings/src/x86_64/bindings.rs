@@ -3260,6 +3260,10 @@ pub struct kvm_irqchip {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
+#[cfg_attr(
+    feature = "serde",
+    derive(zerocopy::AsBytes, zerocopy::FromBytes, zerocopy::FromZeroes)
+)]
 pub union kvm_irqchip__bindgen_ty_1 {
     pub dummy: [::std::os::raw::c_char; 512usize],
     pub pic: kvm_pic_state,
