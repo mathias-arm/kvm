@@ -289,6 +289,7 @@ pub const KVM_ARM_VCPU_SVE: u32 = 4;
 pub const KVM_ARM_VCPU_PTRAUTH_ADDRESS: u32 = 5;
 pub const KVM_ARM_VCPU_PTRAUTH_GENERIC: u32 = 6;
 pub const KVM_ARM_VCPU_HAS_EL2: u32 = 7;
+pub const KVM_ARM_VCPU_REC: u32 = 8;
 pub const KVM_ARM_MAX_DBG_REGS: u32 = 16;
 pub const KVM_DEBUG_ARCH_HSR_HIGH_VALID: u32 = 1;
 pub const KVM_GUESTDBG_USE_SW_BP: u32 = 65536;
@@ -370,6 +371,17 @@ pub const KVM_DEV_ARM_ITS_SAVE_TABLES: u32 = 1;
 pub const KVM_DEV_ARM_ITS_RESTORE_TABLES: u32 = 2;
 pub const KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES: u32 = 3;
 pub const KVM_DEV_ARM_ITS_CTRL_RESET: u32 = 4;
+pub const KVM_CAP_ARM_RME_CONFIG_REALM: u32 = 0;
+pub const KVM_CAP_ARM_RME_CREATE_REALM: u32 = 1;
+pub const KVM_CAP_ARM_RME_INIT_RIPAS_REALM: u32 = 2;
+pub const KVM_CAP_ARM_RME_POPULATE_REALM: u32 = 3;
+pub const KVM_CAP_ARM_RME_ACTIVATE_REALM: u32 = 4;
+pub const ARM_RME_CONFIG_RPV: u32 = 0;
+pub const ARM_RME_CONFIG_HASH_ALGO: u32 = 1;
+pub const ARM_RME_CONFIG_MEASUREMENT_ALGO_SHA256: u32 = 0;
+pub const ARM_RME_CONFIG_MEASUREMENT_ALGO_SHA512: u32 = 1;
+pub const ARM_RME_CONFIG_RPV_SIZE: u32 = 64;
+pub const KVM_ARM_RME_POPULATE_FLAGS_MEASURE: u32 = 1;
 pub const KVM_ARM_VCPU_PMU_V3_CTRL: u32 = 0;
 pub const KVM_ARM_VCPU_PMU_V3_IRQ: u32 = 0;
 pub const KVM_ARM_VCPU_PMU_V3_INIT: u32 = 1;
@@ -505,6 +517,8 @@ pub const KVM_VM_MIPS_AUTO: u32 = 0;
 pub const KVM_VM_MIPS_VZ: u32 = 1;
 pub const KVM_VM_MIPS_TE: u32 = 2;
 pub const KVM_S390_SIE_PAGE_OFFSET: u32 = 1;
+pub const KVM_VM_TYPE_ARM_SHIFT: u32 = 8;
+pub const KVM_VM_TYPE_ARM_MASK: u32 = 3840;
 pub const KVM_VM_TYPE_ARM_IPA_SIZE_MASK: u32 = 255;
 pub const KVM_CAP_IRQCHIP: u32 = 0;
 pub const KVM_CAP_HLT: u32 = 1;
@@ -731,6 +745,7 @@ pub const KVM_CAP_VM_TYPES: u32 = 235;
 pub const KVM_CAP_PRE_FAULT_MEMORY: u32 = 236;
 pub const KVM_CAP_X86_APIC_BUS_CYCLES_NS: u32 = 237;
 pub const KVM_CAP_X86_GUEST_MODE: u32 = 238;
+pub const KVM_CAP_ARM_RME: u32 = 300;
 pub const KVM_IRQ_ROUTING_IRQCHIP: u32 = 1;
 pub const KVM_IRQ_ROUTING_MSI: u32 = 2;
 pub const KVM_IRQ_ROUTING_S390_ADAPTER: u32 = 3;
@@ -1319,6 +1334,143 @@ pub type _bindgen_ty_2 = ::std::os::raw::c_uint;
 pub const KVM_REG_ARM_VENDOR_HYP_BIT_FUNC_FEAT: _bindgen_ty_3 = 0;
 pub const KVM_REG_ARM_VENDOR_HYP_BIT_PTP: _bindgen_ty_3 = 1;
 pub type _bindgen_ty_3 = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct arm_rme_config {
+    pub cfg: __u32,
+    pub __bindgen_anon_1: arm_rme_config__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union arm_rme_config__bindgen_ty_1 {
+    pub __bindgen_anon_1: arm_rme_config__bindgen_ty_1__bindgen_ty_1,
+    pub __bindgen_anon_2: arm_rme_config__bindgen_ty_1__bindgen_ty_2,
+    pub reserved: [__u8; 256usize],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub struct arm_rme_config__bindgen_ty_1__bindgen_ty_1 {
+    pub rpv: [__u8; 64usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_config__bindgen_ty_1__bindgen_ty_1"]
+        [::std::mem::size_of::<arm_rme_config__bindgen_ty_1__bindgen_ty_1>() - 64usize];
+    ["Alignment of arm_rme_config__bindgen_ty_1__bindgen_ty_1"]
+        [::std::mem::align_of::<arm_rme_config__bindgen_ty_1__bindgen_ty_1>() - 1usize];
+    ["Offset of field: arm_rme_config__bindgen_ty_1__bindgen_ty_1::rpv"]
+        [::std::mem::offset_of!(arm_rme_config__bindgen_ty_1__bindgen_ty_1, rpv) - 0usize];
+};
+impl Default for arm_rme_config__bindgen_ty_1__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct arm_rme_config__bindgen_ty_1__bindgen_ty_2 {
+    pub hash_algo: __u32,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_config__bindgen_ty_1__bindgen_ty_2"]
+        [::std::mem::size_of::<arm_rme_config__bindgen_ty_1__bindgen_ty_2>() - 4usize];
+    ["Alignment of arm_rme_config__bindgen_ty_1__bindgen_ty_2"]
+        [::std::mem::align_of::<arm_rme_config__bindgen_ty_1__bindgen_ty_2>() - 4usize];
+    ["Offset of field: arm_rme_config__bindgen_ty_1__bindgen_ty_2::hash_algo"]
+        [::std::mem::offset_of!(arm_rme_config__bindgen_ty_1__bindgen_ty_2, hash_algo) - 0usize];
+};
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_config__bindgen_ty_1"]
+        [::std::mem::size_of::<arm_rme_config__bindgen_ty_1>() - 256usize];
+    ["Alignment of arm_rme_config__bindgen_ty_1"]
+        [::std::mem::align_of::<arm_rme_config__bindgen_ty_1>() - 4usize];
+    ["Offset of field: arm_rme_config__bindgen_ty_1::reserved"]
+        [::std::mem::offset_of!(arm_rme_config__bindgen_ty_1, reserved) - 0usize];
+};
+impl Default for arm_rme_config__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for arm_rme_config__bindgen_ty_1 {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "arm_rme_config__bindgen_ty_1 {{ union }}")
+    }
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_config"][::std::mem::size_of::<arm_rme_config>() - 260usize];
+    ["Alignment of arm_rme_config"][::std::mem::align_of::<arm_rme_config>() - 4usize];
+    ["Offset of field: arm_rme_config::cfg"][::std::mem::offset_of!(arm_rme_config, cfg) - 0usize];
+};
+impl Default for arm_rme_config {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for arm_rme_config {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(
+            f,
+            "arm_rme_config {{ cfg: {:?}, __bindgen_anon_1: {:?} }}",
+            self.cfg, self.__bindgen_anon_1
+        )
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct arm_rme_populate_realm {
+    pub base: __u64,
+    pub size: __u64,
+    pub flags: __u32,
+    pub reserved: [__u32; 3usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_populate_realm"][::std::mem::size_of::<arm_rme_populate_realm>() - 32usize];
+    ["Alignment of arm_rme_populate_realm"]
+        [::std::mem::align_of::<arm_rme_populate_realm>() - 8usize];
+    ["Offset of field: arm_rme_populate_realm::base"]
+        [::std::mem::offset_of!(arm_rme_populate_realm, base) - 0usize];
+    ["Offset of field: arm_rme_populate_realm::size"]
+        [::std::mem::offset_of!(arm_rme_populate_realm, size) - 8usize];
+    ["Offset of field: arm_rme_populate_realm::flags"]
+        [::std::mem::offset_of!(arm_rme_populate_realm, flags) - 16usize];
+    ["Offset of field: arm_rme_populate_realm::reserved"]
+        [::std::mem::offset_of!(arm_rme_populate_realm, reserved) - 20usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct arm_rme_init_ripas {
+    pub base: __u64,
+    pub size: __u64,
+    pub reserved: [__u64; 2usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of arm_rme_init_ripas"][::std::mem::size_of::<arm_rme_init_ripas>() - 32usize];
+    ["Alignment of arm_rme_init_ripas"][::std::mem::align_of::<arm_rme_init_ripas>() - 8usize];
+    ["Offset of field: arm_rme_init_ripas::base"]
+        [::std::mem::offset_of!(arm_rme_init_ripas, base) - 0usize];
+    ["Offset of field: arm_rme_init_ripas::size"]
+        [::std::mem::offset_of!(arm_rme_init_ripas, size) - 8usize];
+    ["Offset of field: arm_rme_init_ripas::reserved"]
+        [::std::mem::offset_of!(arm_rme_init_ripas, reserved) - 16usize];
+};
 pub const kvm_smccc_filter_action_KVM_SMCCC_FILTER_HANDLE: kvm_smccc_filter_action = 0;
 pub const kvm_smccc_filter_action_KVM_SMCCC_FILTER_DENY: kvm_smccc_filter_action = 1;
 pub const kvm_smccc_filter_action_KVM_SMCCC_FILTER_FWD_TO_USER: kvm_smccc_filter_action = 2;
@@ -3805,5 +3957,25 @@ const _: () = {
         [::std::mem::offset_of!(kvm_pre_fault_memory, flags) - 16usize];
     ["Offset of field: kvm_pre_fault_memory::padding"]
         [::std::mem::offset_of!(kvm_pre_fault_memory, padding) - 24usize];
+};
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, PartialEq)]
+pub struct kvm_arm_rmm_psci_complete {
+    pub target_mpidr: __u64,
+    pub psci_status: __u32,
+    pub padding: [__u32; 3usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_arm_rmm_psci_complete"]
+        [::std::mem::size_of::<kvm_arm_rmm_psci_complete>() - 24usize];
+    ["Alignment of kvm_arm_rmm_psci_complete"]
+        [::std::mem::align_of::<kvm_arm_rmm_psci_complete>() - 8usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::target_mpidr"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, target_mpidr) - 0usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::psci_status"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, psci_status) - 8usize];
+    ["Offset of field: kvm_arm_rmm_psci_complete::padding"]
+        [::std::mem::offset_of!(kvm_arm_rmm_psci_complete, padding) - 12usize];
 };
 pub type __uint128_t = u128;
